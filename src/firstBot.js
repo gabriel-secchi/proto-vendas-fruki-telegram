@@ -78,7 +78,7 @@ bot.on('text', async ctx => {
     Carrinho.isEdicaoProduto(userId, async (isEdicaoProduto, codProduto) =>  {
         if(isEdicaoProduto){
             const valDigitado = parseInt(textoDigitado)
-            if(isNaN(valDigitado)) {
+            if(isNaN(valDigitado) || valDigitado < 1) {
                 await ctx.reply('A quantidade que você digitou não é válida')
                 await ctx.reply('Só são válidos números inteiros, 0 (zero) para ignorar ou remover o produto do carrinho')
                 await ctx.reply('Digite um número válido.')
@@ -155,6 +155,8 @@ bot.action('*consultar_pedido*', async ctx => {
     //    console.log(`Código cliente: ${clientCode}`)
     //    return clientCode
     //})
+    ctx.reply("Seu último pedido realizado está aguardando aprovação do nosso sitema interno de recepção de pedidos")
+    return
 })
 
 bot.action('*limparCarrinho*', async ctx => { 
@@ -288,10 +290,15 @@ bot.action('*condicao_60*', async ctx => {
 })
 
 const concluirEnviarPedido = async (ctx, telegramClientId) => {
+    const userId = await getIdUser(ctx)
     await ctx.reply("Perfeito")
     await ctx.reply("Aguarde um momento enquanto envio seu pedido para Fruki.")
 
-    Pedido.salvarPedido(ctx, telegramClientId, dadosPagamento[telegramClientId])
+    Pedido.salvarPedido(ctx, telegramClientId, dadosPagamento[telegramClientId], () => {
+        addBotoesIniciais(userId, (botoes) => {
+            ctx.replyWithHTML('Posso te ajudar em mais alguma coisa?', botoes)
+        })
+    })
 }
 
 bot.startPolling()

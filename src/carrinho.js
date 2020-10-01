@@ -40,11 +40,7 @@ class Carrinho {
         await redisClient.del(`${telegramClientId}_edit_prod`)
         
         const afterGetCarrinho = async (carrinho) => {
-            /* const botoesAfterItemCarrinho = Extra.markup(Markup.inlineKeyboard([
-                Markup.callbackButton('Ver carrinho', '*consult_carrinho*'),
-                Markup.callbackButton('Finalizar pedido', '*finalizar_pedido*'),
-                Markup.callbackButton('Continuar comprando', '*fazer_pedido*')
-            ], {columns: 2})); */
+            
 
             if(carrinho == null) {
                 carrinho = new Object
@@ -127,6 +123,7 @@ class Carrinho {
 
                 const txtValorTotal = new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL'}).format(objCarrinho.valorTotal)
                 await ctx.reply(`${codProduto} - ${objCarrinho.descricao}\nVolumes: ${objCarrinho.qtde}\nValor: ${txtValorTotal}`, botao_remover_item)
+                
 
 
                 if( idx == qtdeItensCarrinho) {
