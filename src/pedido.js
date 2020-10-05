@@ -34,7 +34,7 @@ class Pedido {
         const codClientePreenchido = this.preencherTextoAntes(dadospagamento["cod_cliente"], 7, "0")
         const codModoPag = dadospagamento["forma_pagamento:"] == 'boleto' ? "02" : "01"
 
-        fs.appendFile(`C:/Temp/${filename}`, `01${dataFOrmatada}${codClientePreenchido}${codModoPag}\n\n`, function (err) {
+        fs.appendFile(`C:/Temp/${filename}`, `01${dataFOrmatada}${codClientePreenchido}${codModoPag}\r\n\r\n`, function (err) {
             if (err) {
                 throw err;
             }
@@ -57,7 +57,7 @@ class Pedido {
             const valorProdPartInt = pedidoCtx.preencherTextoAntes(partInt, 12, "0")
             const valorProdPartDec = pedidoCtx.preencherTextodepois(partDec, 5, "0")
             
-            fs.appendFile(`C:/Temp/${filename}`, `0300000000EAN${codProdPreenchido}000000${descProdPreenchido}${qtdeProdPreenchido}${valorProdPartInt}${valorProdPartDec}\n`, function (err) {
+            fs.appendFile(`C:/Temp/${filename}`, `0300000000EAN${codProdPreenchido}000000${descProdPreenchido}${qtdeProdPreenchido}${valorProdPartInt}${valorProdPartDec}\r\n`, function (err) {
                 if (err) {
                     throw err;
                 }
